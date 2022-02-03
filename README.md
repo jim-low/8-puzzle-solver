@@ -5,5 +5,5 @@ College Assignment on Artificial Intelligence Project to solve given puzzle usin
 - Puzzle: 8 Puzzle
 - Chosen Algorithms:
     - idk yet 1
-    - idk yet 2
+    - Informed Search: A* Search
 - Programming Language of choice: Javascript
