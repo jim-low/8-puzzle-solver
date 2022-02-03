@@ -5,7 +5,9 @@ for (let i = 0; i < 3; ++i) {
     tiles.push(nums.slice(i * 3, (i * 3) + 3));
 }
 
-function fillTiles(boxes) {
+const boxes = document.querySelectorAll('.box span');
+
+function resetTiles() {
     const tileNums = [
         ...tiles[0],
         ...tiles[1],
@@ -76,9 +78,11 @@ function movePuzzle(direction) {
         tiles[row][col] = tmpNum;
         tiles[row][col + 1] = 0;
     }
+
+    resetTiles();
 }
 
 export {
     movePuzzle,
-    fillTiles,
+    resetTiles,
 };

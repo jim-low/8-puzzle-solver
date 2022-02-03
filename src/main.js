@@ -1,6 +1,4 @@
-import { movePuzzle, fillTiles } from './puzzle.js';
-
-const boxes = document.querySelectorAll('.box span');
+import { movePuzzle, resetTiles } from './puzzle.js';
 
 document.addEventListener('keydown', (e) => {
     if (!e.key.includes('Arrow')) {
@@ -8,15 +6,11 @@ document.addEventListener('keydown', (e) => {
     }
 
     movePuzzle(e.key.split('Arrow')[1].toLowerCase());
-    fillTiles(boxes);
 });
 
 document.querySelectorAll('.control-buttons button').forEach(button => {
     const direction = button.innerText.split(' ')[1];
-    button.addEventListener('click', () => {
-        movePuzzle(direction);
-        fillTiles(boxes);
-    })
+    button.addEventListener('click', () => movePuzzle(direction))
 });
 
-fillTiles(boxes);
+resetTiles();
