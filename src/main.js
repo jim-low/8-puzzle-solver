@@ -1,4 +1,4 @@
-import { movePuzzle, resetTiles } from './puzzle.js';
+import { movePuzzle, resetTiles, goalState } from './puzzle.js';
 
 document.addEventListener('keydown', (e) => {
     if (!e.key.includes('Arrow')) {

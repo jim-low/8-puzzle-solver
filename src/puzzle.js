@@ -1,11 +1,17 @@
 const nums = [ 1, 2, 3, 4, 5, 6, 7, 8, 0 ].sort(() => Math.random() - 0.5);
+const boxes = document.querySelectorAll('.box span');
+
+const goalState = [
+    [ 1, 2, 3 ],
+    [ 4, 5, 6 ],
+    [ 7, 8, 0 ],
+];
 
 const tiles = [];
 for (let i = 0; i < 3; ++i) {
     tiles.push(nums.slice(i * 3, (i * 3) + 3));
 }
 
-const boxes = document.querySelectorAll('.box span');
 
 function resetTiles() {
     const tileNums = [
@@ -85,4 +91,5 @@ function movePuzzle(direction) {
 export {
     movePuzzle,
     resetTiles,
+    goalState,
 };
