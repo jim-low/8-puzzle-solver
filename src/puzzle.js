@@ -2,8 +2,9 @@ const goalState = [ 1, 2, 3, 4, 5, 6, 7, 8, 0 ];
 const puzzle = [ 1, 2, 3, 4, 5, 6, 7, 8, 0 ].sort(() => Math.random() - 0.5);
 const boxes = document.querySelectorAll('.box span');
 
-function resetTiles() {
-    boxes.forEach((box, i) => box.innerText = puzzle[i] || '');
+function resetTiles(tiles = null) {
+    const display = tiles || puzzle;
+    boxes.forEach((box, i) => box.innerText = display[i] || '');
 }
 
 function canMove(currIdx, direction) {
