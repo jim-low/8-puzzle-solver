@@ -11,6 +11,7 @@ export default class BreadthFirst {
 
         this.goalState = [1, 2, 3, 4, 5, 6, 7, 8, 0]
     }
+
     move(state, successors, pos, steps) {
         var newState;
         newState = state.slice();
