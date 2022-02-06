@@ -14,7 +14,9 @@ const puzzleStates = [
     [4, 6, 1, 8, 3, 2, 5, 7, 0],
     [8, 0, 6, 1, 7, 4, 2, 5, 3]
 ]
-const animator = new PuzzleAnimator(new BreadthFirst().time(puzzleStates[0]));
+let currentStateIdx = 0;
+
+const animator = new PuzzleAnimator(new BreadthFirst().time(puzzleStates[currentStateIdx]));
 animator.fillPuzzle();
 
 document.addEventListener('keydown', (e) => {
@@ -29,6 +31,27 @@ document.querySelectorAll('.animation-control').forEach(btn => {
     btn.addEventListener('click', () => {
         const instruction = btn.classList[1];
         animator[instruction]();
+    });
+});
+
+document.querySelectorAll('.state-control').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const stateRequest = btn.classList[1]
+
+        if (stateRequest === 'reset') {
+            animator.resetPuzzle();
+            return;
+        }
+
+        if (stateRequest === 'prev' && currentStateIdx > 0) {
+            --currentStateIdx;
+        }
+
+        if (stateRequest === 'next' && currentStateIdx < puzzleStates.length) {
+            ++currentStateIdx;
+        }
+
+        animator.newPuzzle(puzzleStates[currentStateIdx]);
     });
 });
 
