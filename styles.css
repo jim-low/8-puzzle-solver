@@ -19,9 +19,13 @@
     align-content: center;
 }
 
-.animation-container {
+.container {
+    margin: 0 auto;
     margin-top: 5em;
     text-align: center;
+    display: flex;
+    justify-content: space-between;
+    width: 35%;
 }
 
 .control-buttons {
