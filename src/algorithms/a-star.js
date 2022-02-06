@@ -1,2 +1,2 @@
-export class AStar {
+export default class AStar {
 }
