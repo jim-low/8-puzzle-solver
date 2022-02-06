@@ -1,81 +1,65 @@
-const nums = [ 1, 2, 3, 4, 5, 6, 7, 8, 0 ].sort(() => Math.random() - 0.5);
+const goalState = [ 1, 2, 3, 4, 5, 6, 7, 8, 0 ];
+const puzzle = [ 1, 2, 3, 4, 5, 6, 7, 8, 0 ].sort(() => Math.random() - 0.5);
 const boxes = document.querySelectorAll('.box span');
 
-const goalState = [
-    [ 1, 2, 3 ],
-    [ 4, 5, 6 ],
-    [ 7, 8, 0 ],
-];
-
-const tiles = [];
-for (let i = 0; i < 3; ++i) {
-    tiles.push(nums.slice(i * 3, (i * 3) + 3));
-}
-
-
 function resetTiles() {
-    const tileNums = [
-        ...tiles[0],
-        ...tiles[1],
-        ...tiles[2],
-    ];
-    boxes.forEach((box, i) => box.innerText = tileNums[i] || '');
-}
-
-function findSpace() {
-    let location = [];
-    tiles.forEach((row, i) => {
-        const result = row.indexOf(0);
-        if (result !== -1) {
-            location = [ i, result ];
-        }
-    })
-    return location;
+    boxes.forEach((box, i) => box.innerText = puzzle[i] || '');
 }
 
 function canMove(currIdx, direction) {
-    if (direction ===    'up' && currIdx[0] === 0 &&
-        direction ===  'down' && currIdx[0] === 2 &&
-        direction ===  'left' && currIdx[1] === 0 &&
-        direction === 'right' && currIdx[1] === 2
-    ) {
-        return false
+    switch(direction) {
+        case 'up':
+            if (currIdx < 3) {
+                return false;
+            }
+            break;
+
+        case 'right':
+            if (
+                currIdx === 2 ||
+                currIdx === 5 ||
+                currIdx === 8
+            ) {
+                return false;
+            }
+            break;
+
+        case 'down':
+            if (currIdx >= 6 && currIdx < 9) {
+                return false;
+            }
+            break;
+
+        case 'left':
+            if (
+                currIdx === 0 ||
+                currIdx === 3 ||
+                currIdx === 6
+            ) {
+                return false;
+            }
+            break;
     }
 
     return true;
 }
 
 function movePuzzle(direction) {
-    const spaceIdx = findSpace();
+    const spaceIdx = puzzle.indexOf(0);
     if (!canMove(spaceIdx, direction)) {
         return;
     }
 
-    const [ row, col ] = spaceIdx;
-    let tmpNum;
-    if (direction === 'up') {
-        tmpNum = tiles[row - 1][col];
-        tiles[row][col] = tmpNum;
-        tiles[row - 1][col] = 0
+    const directions = {
+        up: -3,
+        down: 3,
+        left: -1,
+        right: 1,
     }
-
-    if (direction === 'down') {
-        tmpNum = tiles[row + 1][col];
-        tiles[row][col] = tmpNum;
-        tiles[row + 1][col] = 0;
-    }
-
-    if (direction === 'left') {
-        tmpNum = tiles[row][col - 1];
-        tiles[row][col] = tmpNum;
-        tiles[row][col - 1] = 0;
-    }
-
-    if (direction === 'right') {
-        tmpNum = tiles[row][col + 1];
-        tiles[row][col] = tmpNum;
-        tiles[row][col + 1] = 0;
-    }
+    const swapIdx = spaceIdx + directions[direction];
+    const numToSwap = puzzle[swapIdx];
+    puzzle[spaceIdx] = numToSwap;
+    puzzle[swapIdx] = 0;
 
     resetTiles();
 }
