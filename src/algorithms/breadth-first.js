@@ -37,9 +37,9 @@ export default class BreadthFirst {
             //move up
             newState = move(state, successors, pos, -3);
             if (!compare(newState, state.prev)) {
-                _state = hashState(newState);
-                if (typeof hash[_state] === 'undefined') {
-                    hash[_state] = newState;
+                _state = this.hashState(newState);
+                if (typeof this.hash[_state] === 'undefined') {
+                    this.hash[_state] = newState;
                     newState.prev = state;
                     successors.push(newState);
                 }
@@ -49,9 +49,9 @@ export default class BreadthFirst {
             //move left
             newState = move(state, successors, pos, -1);
             if (!compare(newState, state.prev)) {
-                _state = hashState(newState);
-                if (typeof hash[_state] === 'undefined') {
-                    hash[_state] = newState;
+                _state = this.hashState(newState);
+                if (typeof this.hash[_state] === 'undefined') {
+                    this.hash[_state] = newState;
                     newState.prev = state;
                     successors.push(newState);
                 }
@@ -61,9 +61,9 @@ export default class BreadthFirst {
             //move down
             newState = move(state, successors, pos, 3);
             if (!compare(newState, state.prev)) {
-                _state = hashState(newState);
-                if (typeof hash[_state] === 'undefined') {
-                    hash[_state] = newState;
+                _state = this.hashState(newState);
+                if (typeof this.hash[_state] === 'undefined') {
+                    this.hash[_state] = newState;
                     newState.prev = state;
                     successors.push(newState);
                 }
@@ -73,9 +73,9 @@ export default class BreadthFirst {
             //move right
             newState = move(state, successors, pos, 1);
             if (!compare(newState, state.prev)) {
-                _state = hashState(newState);
-                if (typeof hash[_state] === 'undefined') {
-                    hash[_state] = newState;
+                _state = this.hashState(newState);
+                if (typeof this.hash[_state] === 'undefined') {
+                    this.hash[_state] = newState;
                     newState.prev = state;
                     successors.push(newState);
                 }
@@ -92,44 +92,44 @@ export default class BreadthFirst {
 
     statesPerSecond() {
         var now = new Date();
-        if (now.getTime() - startTime.getTime() >= counter) {
-            console.log('counted', counter, allSuc.length - counted);
-            counted = allSuc.length;
-            counter += 1000;
+        if (now.getTime() - this.startTime.getTime() >= this.counter) {
+            console.log('this.counted', this.counter, this.allSuc.length - this.counted);
+            this.counted = this.allSuc.length;
+            this.counter += 1000;
         }
     }
 
     collateStates(i) {
-        var _ = values[i].prev;
-        var result = [values[i]];
+        var _ = this.values[i].prev;
+        var result = [this.values[i]];
         while (_) {
-            for (var j = 0; j < size; j++) {
-                if (compare(_, values[j])) {
-                    _ = values[j].prev;
-                    result.push(values[j]);
+            for (var j = 0; j < this.size; j++) {
+                if (compare(_, this.values[j])) {
+                    _ = this.values[j].prev;
+                    result.push(this.values[j]);
                     break;
                 }
             }
         }
-        console.log(size);
+        console.log(this.size);
         return result.reverse();
     }
 
     breadthFirstSearch(state, goalState) {
-        values = new Array(1000000);
-        // size = 0;
+        this.values = new Array(1000000);
+        // this.size = 0;
         state.prev = null;
-        values[0] = state;
-        size++;
-        for (var i = 0; i < size; i++) {
+        this.values[0] = state;
+        this.size++;
+        for (var i = 0; i < this.size; i++) {
             statesPerSecond();
-            if (compare(goalState, values[i])) {
+            if (compare(this.goalState, this.values[i])) {
                 return collateStates(i);
             } else {
-                var _successors = getSuccessors(values[i]);
+                var _successors = getSuccessors(this.values[i]);
                 for (var k = 0; k < _successors.length; k++) {
-                    values[size] = _successors[k];
-                    size++;
+                    this.values[this.size] = _successors[k];
+                    this.size++;
                 }
             }
         }
@@ -170,7 +170,7 @@ export default class BreadthFirst {
     shuffle(array) {
         var size = array.length;
         var rand;
-        for (var i = 1; i < size; i += 1) {
+        for (var i = 1; i < this.size; i += 1) {
             rand = Math.round(Math.random() * i);
             swap(array, rand, i);
         }
@@ -197,12 +197,12 @@ export default class BreadthFirst {
     }
 
     time() {
-        var puzzle = generatePuzzle(goalState);
-        startTime = new Date();
-        var result = breadthFirstSearch(puzzle, goalState);
+        var puzzle = generatePuzzle(this.goalState);
+        this.startTime = new Date();
+        var result = breadthFirstSearch(puzzle, this.goalState);
         console.log(result.length);
-        endTime = new Date();
-        console.log('Operation took ' + (endTime.getTime() - startTime.getTime()) + ' msec');
+        this.endTime = new Date();
+        console.log('Operation took ' + (this.endTime.getTime() - this.startTime.getTime()) + ' msec');
     }
 }
 new BreadthFirst().time()
