@@ -16,5 +16,6 @@
   "bugs": {
     "url": "https://github.com/jim-low/8-puzzle-solver/issues"
   },
-  "homepage": "https://github.com/jim-low/8-puzzle-solver"
+  "homepage": "https://github.com/jim-low/8-puzzle-solver",
+  "type": "module"
 }
