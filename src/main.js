@@ -1,4 +1,5 @@
 import { movePuzzle, resetTiles, goalState } from './puzzle.js';
+import BreadthFirst from './algorithms/breadth-first.js';
 
 document.addEventListener('keydown', (e) => {
     if (!e.key.includes('Arrow')) {
@@ -14,3 +15,4 @@ document.querySelectorAll('.control-buttons button').forEach(button => {
 });
 
 resetTiles();
+new BreadthFirst().time()
