@@ -1,5 +1,6 @@
 import { movePuzzle, resetTiles, goalState } from './puzzle.js';
 import BreadthFirst from './algorithms/breadth-first.js';
+
 const puzzleStates = [
     [4, 8, 0, 7, 3, 2, 6, 5, 1],
     [2, 6, 8, 7, 1, 0, 5, 3, 4],
@@ -27,4 +28,5 @@ document.querySelectorAll('.control-buttons button').forEach(button => {
 });
 
 resetTiles();
-puzzleStates.forEach(state => new BreadthFirst().time(state))
+// keep the line below commented until further optimized
+// puzzleStates.forEach(state => new BreadthFirst().time(state))
