@@ -11,7 +11,7 @@ export default class BreadthFirst {
 
         this.goalState = [1, 2, 3, 4, 5, 6, 7, 8, 0]
     }
-    
+
     move(state, successors, pos, steps) {
         let newState;
         newState = state.slice();
@@ -206,4 +206,3 @@ export default class BreadthFirst {
         console.log('Operation took ' + (this.endTime.getTime() - this.startTime.getTime()) + ' msec');
     }
 }
-new BreadthFirst().time()
