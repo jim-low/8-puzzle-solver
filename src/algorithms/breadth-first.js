@@ -11,29 +11,29 @@ export default class BreadthFirst {
 
         this.goalState = [1, 2, 3, 4, 5, 6, 7, 8, 0]
     }
-
+    
     move(state, successors, pos, steps) {
-        var newState;
+        let newState;
         newState = state.slice();
         this.swap(newState, pos, pos + steps);
         return newState;
     }
 
     hashState(state) {
-        var stateLength = state.length;
-        var hash = 0;
-        for (var i = 0; i < stateLength; i++) {
+        let stateLength = state.length;
+        let hash = 0;
+        for (let i = 0; i < stateLength; i++) {
             hash += state[i] * Math.pow(stateLength, i);
         }
         return hash;
     }
 
     getSuccessors(state) {
-        var newState, _state;
-        var successors = [];
-        var pos = state.indexOf(0);
-        var row = Math.floor(pos / 3);
-        var col = pos % 3;
+        let newState, _state;
+        let successors = [];
+        let pos = state.indexOf(0);
+        let row = Math.floor(pos / 3);
+        let col = pos % 3;
         if (row > 0) {
             //move up
             newState = this.move(state, successors, pos, -3);
@@ -86,13 +86,13 @@ export default class BreadthFirst {
     }
 
     swap(state, from, to) {
-        var _ = state[from];
+        let _ = state[from];
         state[from] = state[to];
         state[to] = _;
     }
 
     statesPerSecond() {
-        var now = new Date();
+        let now = new Date();
         if (now.getTime() - this.startTime.getTime() >= this.counter) {
             console.log('this.counted', this.counter, this.allSuc.length - this.counted);
             this.counted = this.allSuc.length;
@@ -101,10 +101,10 @@ export default class BreadthFirst {
     }
 
     collateStates(i) {
-        var _ = this.values[i].prev;
-        var result = [this.values[i]];
+        let _ = this.values[i].prev;
+        let result = [this.values[i]];
         while (_) {
-            for (var j = 0; j < this.size; j++) {
+            for (let j = 0; j < this.size; j++) {
                 if (this.compare(_, this.values[j])) {
                     _ = this.values[j].prev;
                     result.push(this.values[j]);
@@ -122,13 +122,13 @@ export default class BreadthFirst {
         state.prev = null;
         this.values[0] = state;
         this.size++;
-        for (var i = 0; i < this.size; i++) {
+        for (let i = 0; i < this.size; i++) {
             this.statesPerSecond();
             if (this.compare(this.goalState, this.values[i])) {
                 return this.collateStates(i);
             } else {
-                var _successors = this.getSuccessors(this.values[i]);
-                for (var k = 0; k < _successors.length; k++) {
+                let _successors = this.getSuccessors(this.values[i]);
+                for (let k = 0; k < _successors.length; k++) {
                     this.values[this.size] = _successors[k];
                     this.size++;
                 }
@@ -141,7 +141,7 @@ export default class BreadthFirst {
             return false;
         }
 
-        for (var i = 0; i < arr1.length; i++) {
+        for (let i = 0; i < arr1.length; i++) {
             if (arr1[i] !== arr2[i]) {
                 return false;
             }
@@ -153,12 +153,12 @@ export default class BreadthFirst {
        is unsolvable http://math.stackexchange.com/a/838818
     */
     checkSolvable(state) {
-        var pos = state.indexOf(0);
-        var _state = state.slice();
+        let pos = state.indexOf(0);
+        let _state = state.slice();
         _state.splice(pos, 1);
-        var count = 0;
-        for (var i = 0; i < _state.length; i++) {
-            for (var j = i + 1; j < _state.length; j++) {
+        let count = 0;
+        for (let i = 0; i < _state.length; i++) {
+            for (let j = i + 1; j < _state.length; j++) {
                 if (_state[i] > _state[j]) {
                     count++;
                 }
@@ -169,9 +169,9 @@ export default class BreadthFirst {
 
     /* Fisher-Yates shuffle http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle*/
     shuffle(array) {
-        var size = array.length;
-        var rand;
-        for (var i = 1; i < this.size; i += 1) {
+        let size = array.length;
+        let rand;
+        for (let i = 1; i < this.size; i += 1) {
             rand = Math.round(Math.random() * i);
             this.swap(array, rand, i);
         }
@@ -179,8 +179,8 @@ export default class BreadthFirst {
     }
 
     generatePuzzle(state) {
-        var firstElement, secondElement;
-        var _state = state.slice();
+        let firstElement, secondElement;
+        let _state = state.slice();
         this.shuffle(_state);
         if (!this.checkSolvable(_state)) {
             firstElement = _state[0] !== 0 ? 0 : 3;
@@ -198,11 +198,12 @@ export default class BreadthFirst {
     }
 
     time() {
-        var puzzle = this.generatePuzzle(this.goalState);
+        let puzzle = this.generatePuzzle(this.goalState);
         this.startTime = new Date();
-        var result = this.breadthFirstSearch(puzzle, this.goalState);
+        let result = this.breadthFirstSearch(puzzle, this.goalState);
         console.log(result.length);
         this.endTime = new Date();
         console.log('Operation took ' + (this.endTime.getTime() - this.startTime.getTime()) + ' msec');
     }
 }
+new BreadthFirst().time()
