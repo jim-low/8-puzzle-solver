@@ -1,5 +1,6 @@
 import { movePuzzle, resetTiles, goalState } from './puzzle.js';
 import BreadthFirst from './algorithms/breadth-first.js';
+import PuzzleAnimator from './animation.js';
 
 const puzzleStates = [
     [4, 8, 0, 7, 3, 2, 6, 5, 1],
@@ -13,6 +14,8 @@ const puzzleStates = [
     [4, 6, 1, 8, 3, 2, 5, 7, 0],
     [8, 0, 6, 1, 7, 4, 2, 5, 3]
 ]
+const animator = new PuzzleAnimator(new BreadthFirst().time(puzzleStates[0]));
+animator.fillPuzzle();
 
 document.addEventListener('keydown', (e) => {
     if (!e.key.includes('Arrow')) {
@@ -22,6 +25,13 @@ document.addEventListener('keydown', (e) => {
     movePuzzle(e.key.split('Arrow')[1].toLowerCase());
 });
 
-resetTiles();
+document.querySelectorAll('.animation-control').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const instruction = btn.classList[1];
+        animator[instruction]();
+    });
+});
+
+// resetTiles();
 // keep the line below commented until further optimized
 // puzzleStates.forEach(state => new BreadthFirst().time(state))
