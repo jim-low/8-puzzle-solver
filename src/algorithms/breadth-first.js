@@ -205,4 +205,3 @@ export default class BreadthFirst {
         console.log('Operation took ' + (this.endTime.getTime() - this.startTime.getTime()) + ' msec');
     }
 }
-new BreadthFirst().time()

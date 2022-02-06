@@ -34,19 +34,11 @@ function findSpace() {
 }
 
 function canMove(currIdx, direction) {
-    if (direction === 'up' && currIdx[0] === 0) {
-        return false
-    }
-
-    if (direction === 'down' && currIdx[0] === 2) {
-        return false
-    }
-
-    if (direction === 'left' && currIdx[1] === 0) {
-        return false
-    }
-
-    if (direction === 'right' && currIdx[1] === 2) {
+    if (direction ===    'up' && currIdx[0] === 0 &&
+        direction ===  'down' && currIdx[0] === 2 &&
+        direction ===  'left' && currIdx[1] === 0 &&
+        direction === 'right' && currIdx[1] === 2
+    ) {
         return false
     }
 
