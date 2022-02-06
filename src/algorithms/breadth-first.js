@@ -14,7 +14,7 @@ export default class BreadthFirst {
     move(state, successors, pos, steps) {
         var newState;
         newState = state.slice();
-        swap(newState, pos, pos + steps);
+        this.swap(newState, pos, pos + steps);
         return newState;
     }
 
@@ -35,8 +35,8 @@ export default class BreadthFirst {
         var col = pos % 3;
         if (row > 0) {
             //move up
-            newState = move(state, successors, pos, -3);
-            if (!compare(newState, state.prev)) {
+            newState = this.move(state, successors, pos, -3);
+            if (!this.compare(newState, state.prev)) {
                 _state = this.hashState(newState);
                 if (typeof this.hash[_state] === 'undefined') {
                     this.hash[_state] = newState;
@@ -47,8 +47,8 @@ export default class BreadthFirst {
         }
         if (col > 0) {
             //move left
-            newState = move(state, successors, pos, -1);
-            if (!compare(newState, state.prev)) {
+            newState = this.move(state, successors, pos, -1);
+            if (!this.compare(newState, state.prev)) {
                 _state = this.hashState(newState);
                 if (typeof this.hash[_state] === 'undefined') {
                     this.hash[_state] = newState;
@@ -59,8 +59,8 @@ export default class BreadthFirst {
         }
         if (row < 2) {
             //move down
-            newState = move(state, successors, pos, 3);
-            if (!compare(newState, state.prev)) {
+            newState = this.move(state, successors, pos, 3);
+            if (!this.compare(newState, state.prev)) {
                 _state = this.hashState(newState);
                 if (typeof this.hash[_state] === 'undefined') {
                     this.hash[_state] = newState;
@@ -71,8 +71,8 @@ export default class BreadthFirst {
         }
         if (col < 2) {
             //move right
-            newState = move(state, successors, pos, 1);
-            if (!compare(newState, state.prev)) {
+            newState = this.move(state, successors, pos, 1);
+            if (!this.compare(newState, state.prev)) {
                 _state = this.hashState(newState);
                 if (typeof this.hash[_state] === 'undefined') {
                     this.hash[_state] = newState;
@@ -104,7 +104,7 @@ export default class BreadthFirst {
         var result = [this.values[i]];
         while (_) {
             for (var j = 0; j < this.size; j++) {
-                if (compare(_, this.values[j])) {
+                if (this.compare(_, this.values[j])) {
                     _ = this.values[j].prev;
                     result.push(this.values[j]);
                     break;
@@ -122,11 +122,11 @@ export default class BreadthFirst {
         this.values[0] = state;
         this.size++;
         for (var i = 0; i < this.size; i++) {
-            statesPerSecond();
-            if (compare(this.goalState, this.values[i])) {
-                return collateStates(i);
+            this.statesPerSecond();
+            if (this.compare(this.goalState, this.values[i])) {
+                return this.collateStates(i);
             } else {
-                var _successors = getSuccessors(this.values[i]);
+                var _successors = this.getSuccessors(this.values[i]);
                 for (var k = 0; k < _successors.length; k++) {
                     this.values[this.size] = _successors[k];
                     this.size++;
@@ -172,7 +172,7 @@ export default class BreadthFirst {
         var rand;
         for (var i = 1; i < this.size; i += 1) {
             rand = Math.round(Math.random() * i);
-            swap(array, rand, i);
+            this.swap(array, rand, i);
         }
         return array;
     }
@@ -180,11 +180,11 @@ export default class BreadthFirst {
     generatePuzzle(state) {
         var firstElement, secondElement;
         var _state = state.slice();
-        shuffle(_state);
-        if (!checkSolvable(_state)) {
+        this.shuffle(_state);
+        if (!this.checkSolvable(_state)) {
             firstElement = _state[0] !== 0 ? 0 : 3;
             secondElement = _state[1] !== 0 ? 1 : 3;
-            swap(_state, firstElement, secondElement);
+            this.swap(_state, firstElement, secondElement);
         }
         // _state = [1, 0, 2, 3, 4, 5, 6, 7, 8];
         // _state = [0,7,4,8,2,1,5,3,6];
@@ -197,9 +197,9 @@ export default class BreadthFirst {
     }
 
     time() {
-        var puzzle = generatePuzzle(this.goalState);
+        var puzzle = this.generatePuzzle(this.goalState);
         this.startTime = new Date();
-        var result = breadthFirstSearch(puzzle, this.goalState);
+        var result = this.breadthFirstSearch(puzzle, this.goalState);
         console.log(result.length);
         this.endTime = new Date();
         console.log('Operation took ' + (this.endTime.getTime() - this.startTime.getTime()) + ' msec');
