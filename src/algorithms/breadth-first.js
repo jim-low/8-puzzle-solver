@@ -116,9 +116,8 @@ export default class BreadthFirst {
         return result.reverse();
     }
 
-    breadthFirstSearch(state, goalState) {
+    search(state, goalState) {
         this.values = new Array(1000000);
-        // this.size = 0;
         state.prev = null;
         this.values[0] = state;
         this.size++;
@@ -134,6 +133,7 @@ export default class BreadthFirst {
                 }
             }
         }
+        return [];
     }
 
     compare(arr1, arr2) {
@@ -150,33 +150,33 @@ export default class BreadthFirst {
     }
 
     /* This post on stackexchange explained the condition when a puzzle
-       is unsolvable http://math.stackexchange.com/a/838818
-    */
-    checkSolvable(state) {
-        let pos = state.indexOf(0);
-        let _state = state.slice();
-        _state.splice(pos, 1);
-        let count = 0;
-        for (let i = 0; i < _state.length; i++) {
-            for (let j = i + 1; j < _state.length; j++) {
-                if (_state[i] > _state[j]) {
-                    count++;
+    is unsolvable http://math.stackexchange.com/a/838818
+        */
+        checkSolvable(state) {
+            let pos = state.indexOf(0);
+            let _state = state.slice();
+            _state.splice(pos, 1);
+            let count = 0;
+            for (let i = 0; i < _state.length; i++) {
+                for (let j = i + 1; j < _state.length; j++) {
+                    if (_state[i] > _state[j]) {
+                        count++;
+                    }
                 }
             }
+            return count % 2 === 0;
         }
-        return count % 2 === 0;
-    }
 
     /* Fisher-Yates shuffle http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle*/
-    shuffle(array) {
-        let size = array.length;
-        let rand;
-        for (let i = 1; i < this.size; i += 1) {
-            rand = Math.round(Math.random() * i);
-            this.swap(array, rand, i);
+        shuffle(array) {
+            let size = array.length;
+            let rand;
+            for (let i = 1; i < this.size; i += 1) {
+                rand = Math.round(Math.random() * i);
+                this.swap(array, rand, i);
+            }
+            return array;
         }
-        return array;
-    }
 
     generatePuzzle(state) {
         let firstElement, secondElement;
@@ -187,20 +187,16 @@ export default class BreadthFirst {
             secondElement = _state[1] !== 0 ? 1 : 3;
             this.swap(_state, firstElement, secondElement);
         }
-        // _state = [1, 0, 2, 3, 4, 5, 6, 7, 8];
-        // _state = [0,7,4,8,2,1,5,3,6];
-        // _state = [6,3,1,4,7,2,0,5,8];
-        // _state = [8,0,1,3,4,7,2,6,5];
-        _state = [8, 6, 7, 2, 5, 4, 3, 0, 1]; //32 steps
-        // _state = [0,8,7,6,3,5,1,4,2]; //29 steps
         console.log('Puzzle to solve: [' + _state + ']');
         return _state;
     }
 
-    time() {
-        let puzzle = this.generatePuzzle(this.goalState);
+    time(initialState) {
+        const puzzle = this.generatePuzzle(initialState);
         this.startTime = new Date();
-        let result = this.breadthFirstSearch(puzzle, this.goalState);
+        console.log(puzzle);
+        let result = this.search(puzzle, this.goalState);
+        console.log(result);
         console.log(result.length);
         this.endTime = new Date();
         console.log('Operation took ' + (this.endTime.getTime() - this.startTime.getTime()) + ' msec');

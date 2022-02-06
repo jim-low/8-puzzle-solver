@@ -15,4 +15,4 @@ document.querySelectorAll('.control-buttons button').forEach(button => {
 });
 
 resetTiles();
-new BreadthFirst().time()
+new BreadthFirst().time([3, 2, 5, 1, 8, 7, 0, 4, 6]);
