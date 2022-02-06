@@ -22,11 +22,6 @@ document.addEventListener('keydown', (e) => {
     movePuzzle(e.key.split('Arrow')[1].toLowerCase());
 });
 
-document.querySelectorAll('.control-buttons button').forEach(button => {
-    const direction = button.innerText.split(' ')[1];
-    button.addEventListener('click', () => movePuzzle(direction))
-});
-
 resetTiles();
 // keep the line below commented until further optimized
 // puzzleStates.forEach(state => new BreadthFirst().time(state))
