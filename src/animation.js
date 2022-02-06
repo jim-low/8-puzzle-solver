@@ -5,7 +5,7 @@ export default class PuzzleAnimator {
         this.paths = paths;
 
         this.stateIdx = 0;
-        this.animationID = 0;
+        this.animationID = -1;
         this.animationSpeed = 300;
     }
 
@@ -14,6 +14,10 @@ export default class PuzzleAnimator {
     }
 
     play() {
+        if (this.animationID === -1) {
+            return;
+        }
+
         this.animationID = setInterval(() => {
             if (this.stateIdx >= this.paths.length) {
                 this.pause();
@@ -51,7 +55,7 @@ export default class PuzzleAnimator {
 
     resetPuzzle() {
         this.stateIdx = 0;
-        this.animationID = 0;
+        this.animationID = -1;
         this.fillPuzzle();
     }
 
