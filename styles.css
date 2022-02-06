@@ -12,14 +12,20 @@
 
 .puzzle-box {
     margin: 0 auto;
+    margin-top: 6em;
     min-width: 30em;
     max-width: 50em;
     height: 60vh;
     align-content: center;
 }
 
+.animation-container {
+    margin-top: 5em;
+    text-align: center;
+}
+
 .control-buttons {
-    margin: 5em auto 0 auto;
+    margin: 0 auto;
     width: fit-content;
 }
 
