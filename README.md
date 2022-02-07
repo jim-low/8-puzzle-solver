@@ -5,5 +5,5 @@ College Assignment on Artificial Intelligence Project to solve given puzzle usin
 - Chosen Algorithms:
     - Breadth First Search
     - A* Search
-    - One More Search Strategy
+    - Depth First Search
 - Programming Language: Javascript
