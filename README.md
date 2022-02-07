@@ -1,9 +1,9 @@
 # 8 Puzzle AI Solver
 
-## What is this
-College Assignment on Artificial Intelligence Project to solve given puzzle using 2 chosen algorithms
-- Puzzle: 8 Puzzle
+College Assignment on Artificial Intelligence Project to solve given puzzle using the chosen algorithms
+- Toy Problem: 8 Puzzle
 - Chosen Algorithms:
-    - idk yet 1
-    - Informed Search: A* Search
-- Programming Language of choice: Javascript
+    - Breadth First Search
+    - A* Search
+    - One More Search Strategy
+- Programming Language: Javascript
