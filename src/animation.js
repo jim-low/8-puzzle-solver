@@ -65,7 +65,6 @@ export default class PuzzleAnimator {
 
     newPuzzle(newPaths) {
         this.paths = newPaths;
-        this.stateIdx = 0;
-        this.fillPuzzle();
+        this.resetPuzzle()
     }
 }
