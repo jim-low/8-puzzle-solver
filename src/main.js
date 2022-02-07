@@ -19,6 +19,7 @@ let currentStateIdx = 0;
 const animator = new PuzzleAnimator(new BreadthFirst().time(puzzleStates[currentStateIdx]));
 animator.fillPuzzle();
 
+// maybe might not need this
 document.addEventListener('keydown', (e) => {
     if (!e.key.includes('Arrow')) {
         return;

@@ -1,3 +1,6 @@
+// need to refactor time() and getSuccessors() method
+// maybe add method to reset initial states
+// remove unused parameters
 export default class BreadthFirst {
     constructor() {
         this.endTime = 0
