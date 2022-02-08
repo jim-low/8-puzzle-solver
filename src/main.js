@@ -52,7 +52,8 @@ document.querySelectorAll('.state-control').forEach(btn => {
             ++currentStateIdx;
         }
 
-        animator.newPuzzle(puzzleStates[currentStateIdx]);
+        const newState = new BreadthFirst().time(puzzleStates[currentStateIdx]);
+        animator.newPuzzle(newState);
     });
 });
 
