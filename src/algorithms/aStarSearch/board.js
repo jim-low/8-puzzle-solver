@@ -45,12 +45,12 @@ export default class Board {
             for (let j = 0; j < 3; ++j) {
                 if (currentIdx.col === -1) {
                     currentIdx.row = j;
-                    currentIdx.col = current[j].indexOf(outOfPlace[i]);
+                    currentIdx.col = this.board[j].indexOf(outOfPlace[i]);
                 }
 
                 if (goalIdx.col === -1) {
                     goalIdx.row = j;
-                    goalIdx.col = goal[j].indexOf(outOfPlace[i]);
+                    goalIdx.col = this.goal[j].indexOf(outOfPlace[i]);
                 }
             }
 
