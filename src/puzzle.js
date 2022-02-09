@@ -1,7 +1,8 @@
 // may need to remove canMove() and movePuzzle() function
 
 const goalState = [ 1, 2, 3, 4, 5, 6, 7, 8, 0 ];
-const puzzle = [ 1, 2, 3, 4, 5, 6, 7, 8, 0 ].sort(() => Math.random() - 0.5);
+// const puzzle = [ 1, 2, 3, 4, 5, 6, 7, 8, 0 ].sort(() => Math.random() - 0.5);
+const puzzle = [ 0, 1, 3, 4, 2, 5, 7, 8, 6 ]
 const boxes = document.querySelectorAll('.box span');
 
 function resetTiles(tiles = null) {
