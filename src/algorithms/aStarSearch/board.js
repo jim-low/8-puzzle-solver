@@ -32,17 +32,30 @@ export default class Board {
         return outOfPlace;
     }
 
-    // heuristic cost calculation function
+    // manhattan heuristic cost
+    // calculates displacement of tiles compared to goal state
     manhattan() {
         const outOfPlace = this.getUnmatchedTiles();
 
-        const currentState = [];
-        const goal = [];
+        let totalCost = 0;
+        for (let i = 0; i < outOfPlace.length; ++i) {
+            let currentIdx = {row: -1, col: -1};
+            let goalIdx = {row: -1, col: -1};
 
-        for (let i = 0; i < 3; ++i) {
-            const divisor = i * 3;
-            currentState.push(this.board.slice(divisor, divisor + 3));
-            goal.push(goalState.slice(divisor, divisor + 3));
+            for (let j = 0; j < 3; ++j) {
+                if (currentIdx.col === -1) {
+                    currentIdx.row = j;
+                    currentIdx.col = current[j].indexOf(outOfPlace[i]);
+                }
+
+                if (goalIdx.col === -1) {
+                    goalIdx.row = j;
+                    goalIdx.col = goal[j].indexOf(outOfPlace[i]);
+                }
+            }
+
+            totalCost += Math.abs(currentIdx.row - goalIdx.row) + Math.abs(currentIdx.col - goalIdx.col);
         }
+        return totalCost;
     }
 }
