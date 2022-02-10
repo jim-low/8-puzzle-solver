@@ -26,7 +26,7 @@ export default class PriorityQueue {
             return null;
         }
 
-        return this.queue.shift();
+        return this.queue.shift().data;
     }
 
     size() {
