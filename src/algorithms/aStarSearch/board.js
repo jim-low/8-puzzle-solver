@@ -1,4 +1,4 @@
-import { goalState } from '../../puzzle.js';
+import { goalState, goalState2D } from '../../puzzle.js';
 
 // to switch tiles
 const moves = { up: -3, down: 3, left: -1, right: 1, };
@@ -8,6 +8,11 @@ export default class Board {
         this.tiles = tiles;
         this.g = g; // amount of steps taken to reach this state
         this.prev = prev;
+
+        this.board2D = [];
+        for (let i = 0; i < 3; ++i) {
+            this.board2D.push(this.tiles.slice((i * 3), (i * 3) + 3));
+        }
 
         this.h = this.manhattan(); // heuristic cost (Manhattan)
         this.f = this.g + this.h;
@@ -82,5 +87,27 @@ export default class Board {
     }
 
     manhattan() {
+        let cost = 0;
+
+        this.getUnmatchedTiles().forEach(unmatchedTile => {
+            console.log(unmatchedTile);
+            const currIdx = {row: -1, col: -1};
+            const goalIdx = {row: -1, col: -1};
+
+            for (let i = 0; i < goalState2D.length; ++i) {
+                if (currIdx.col === -1) {
+                    currIdx.col = this.board2D[i].indexOf(unmatchedTile);
+                    currIdx.row = i;
+                }
+
+                if (goalIdx.col === -1) {
+                    goalIdx.col = goalState2D[i].indexOf(unmatchedTile);
+                    goalIdx.row = i;
+                }
+            }
+            cost += Math.abs(currIdx.row - goalIdx.row) + Math.abs(currIdx.col - goalIdx.col);
+        });
+
+        return cost;
     }
 }
