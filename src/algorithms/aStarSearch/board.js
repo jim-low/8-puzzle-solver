@@ -17,7 +17,7 @@ export default class Board {
         const unmatched = [];
 
         for (let i = 0; i < this.prev.length - 1; ++i) {
-            if (this.prev[i] !== this.tiles[i]) {
+            if (goalState[i] !== this.tiles[i]) {
                 unmatched.push(goalState[i]);
             }
         }
