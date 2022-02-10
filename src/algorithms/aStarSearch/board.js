@@ -1,4 +1,4 @@
-// import { goalState } from '../../puzzle.js';
+import { goalState } from '../../puzzle.js';
 
 // to switch tiles
 const moves = { up: -3, down: 3, left: -1, right: 1, };
@@ -15,8 +15,8 @@ export default class Board {
     getUnmatchedTiles() {
         const unmatched = [];
 
-        for (let i = 0; i < goalState.length - 1; ++i) {
-            if (goalState[i] !== this.tiles[i]) {
+        for (let i = 0; i < this.prev.length - 1; ++i) {
+            if (this.prev[i] !== this.tiles[i]) {
                 unmatched.push(goalState[i]);
             }
         }
@@ -46,6 +46,19 @@ export default class Board {
         return moves;
     }
 
+    isEqual(arr1, arr2) {
+        if (arr1.length !== arr2.length) {
+            return false;
+        }
+
+        for (let i = 0; i < arr1.length; ++i) {
+            if (arr1[i] !== arr2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     // get neighbors / possible moves or current state
     getSuccessors() {
         const successors = [];
@@ -58,8 +71,10 @@ export default class Board {
             board[spaceIdx] = board[idxToSwitch];
             board[idxToSwitch] = 0;
 
-            const state = new Board(board, this.g + 1, 0, this.tiles);
-            successors.push(state);
+            if (!this.isEqual(board, this.prev)) {
+                const state = new Board(board, this.g + 1, 0, this.tiles);
+                successors.push(state);
+            }
         })
 
         return successors;
