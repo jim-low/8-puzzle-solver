@@ -16,7 +16,7 @@ export default class Board {
     getUnmatchedTiles() {
         const unmatched = [];
 
-        for (let i = 0; i < this.prev.length - 1; ++i) {
+        for (let i = 0; i < goalState.length - 1; ++i) {
             if (goalState[i] !== this.tiles[i]) {
                 unmatched.push(goalState[i]);
             }
