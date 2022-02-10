@@ -4,12 +4,13 @@ import { goalState } from '../../puzzle.js';
 const moves = { up: -3, down: 3, left: -1, right: 1, };
 
 export default class Board {
-    constructor(tiles, g, h, prev = null) {
+    constructor(tiles, g, prev = null) {
         this.tiles = tiles;
         this.g = g; // amount of steps taken to reach this state
-        this.h = h; // heuristic cost (Manhattan)
-        this.f = g + h;
         this.prev = prev;
+
+        this.h = this.manhattan(); // heuristic cost (Manhattan)
+        this.f = this.g + this.h;
     }
 
     getUnmatchedTiles() {
@@ -72,7 +73,7 @@ export default class Board {
             board[idxToSwitch] = 0;
 
             if (!this.isEqual(board, this.prev)) {
-                const state = new Board(board, this.g + 1, 0, this.tiles);
+                const state = new Board(board, this.g + 1, this.tiles);
                 successors.push(state);
             }
         })
