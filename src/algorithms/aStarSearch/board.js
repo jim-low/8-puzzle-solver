@@ -1,61 +1,70 @@
-import { goalState } from '../../puzzle.js';
+// import { goalState } from '../../puzzle.js';
+
+// to switch tiles
+const moves = { up: -3, down: 3, left: -1, right: 1, };
 
 export default class Board {
-    constructor(tiles) {
-        // one dimension array for current state
-        this.board = this.get2DTiles(tiles);
-        this.goal = this.get2DTiles(goalState);
-    }
-
-    get2DTiles(arr) {
-        const tiles = [];
-        for (let i = 0; i < 3; ++i) {
-            const divisor = i * 3;
-            arr.slice(divisor, divisor + 3);
-        }
-        return tiles;
+    constructor(tiles, g, h, prev = null) {
+        this.tiles = tiles;
+        this.g = g; // amount of steps taken to reach this state
+        this.h = h; // heuristic cost (Manhattan)
+        this.f = g + h;
+        this.prev = prev;
     }
 
     getUnmatchedTiles() {
-        const outOfPlace = [];
-        for (let i = 0; i < 3; ++i) {
-            for (let j = 0; j < 3; ++j) {
-                if (this.goal[i][j] === 0) {
-                    continue;
-                }
+        const unmatched = [];
 
-                if (this.goal[i][j] !== this.board[i][j]) {
-                    outOfPlace.push(this.goal[i][j]);
-                }
+        for (let i = 0; i < goalState.length - 1; ++i) {
+            if (goalState[i] !== this.tiles[i]) {
+                unmatched.push(goalState[i]);
             }
         }
-        return outOfPlace;
+
+        return unmatched;
     }
 
-    // manhattan heuristic cost
-    // calculates displacement of tiles compared to goal state
-    manhattan() {
-        const outOfPlace = this.getUnmatchedTiles();
+    getPossibleMoves(spaceIdx) {
+        const moves = [];
 
-        let totalCost = 0;
-        for (let i = 0; i < outOfPlace.length; ++i) {
-            let currentIdx = {row: -1, col: -1};
-            let goalIdx = {row: -1, col: -1};
-
-            for (let j = 0; j < 3; ++j) {
-                if (currentIdx.col === -1) {
-                    currentIdx.row = j;
-                    currentIdx.col = this.board[j].indexOf(outOfPlace[i]);
-                }
-
-                if (goalIdx.col === -1) {
-                    goalIdx.row = j;
-                    goalIdx.col = this.goal[j].indexOf(outOfPlace[i]);
-                }
-            }
-
-            totalCost += Math.abs(currentIdx.row - goalIdx.row) + Math.abs(currentIdx.col - goalIdx.col);
+        if (spaceIdx >= 0 && spaceIdx <= 5) {
+            moves.push('down');
         }
-        return totalCost;
+
+        if (spaceIdx >= 3 && spaceIdx <= 8) {
+            moves.push('up');
+        }
+
+        if (spaceIdx !== 0 || spaceIdx !== 3 || spaceIdx !== 6) {
+            moves.push('left');
+        }
+
+        if (spaceIdx !== 2 || spaceIdx !== 5 || spaceIdx !== 8) {
+            moves.push('right');
+        }
+
+        return moves;
+    }
+
+    // get neighbors / possible moves or current state
+    getSuccessors() {
+        const successors = [];
+
+        const spaceIdx = this.tiles.indexOf(0);
+        this.getPossibleMoves(spaceIdx).forEach(move => {
+            const board = [...this.tiles];
+            const idxToSwitch = spaceIdx + moves[move];
+
+            board[spaceIdx] = board[idxToSwitch];
+            board[idxToSwitch] = 0;
+
+            const state = new Board(board, this.g + 1, 0, this.tiles);
+            successors.push(state);
+        })
+
+        return successors;
+    }
+
+    manhattan() {
     }
 }
