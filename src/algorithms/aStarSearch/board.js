@@ -90,7 +90,6 @@ export default class Board {
         let cost = 0;
 
         this.getUnmatchedTiles().forEach(unmatchedTile => {
-            console.log(unmatchedTile);
             const currIdx = {row: -1, col: -1};
             const goalIdx = {row: -1, col: -1};
 
