@@ -41,11 +41,11 @@ export default class Board {
             moves.push('up');
         }
 
-        if (spaceIdx !== 0 || spaceIdx !== 3 || spaceIdx !== 6) {
+        if (spaceIdx !== 0 && spaceIdx !== 3 && spaceIdx !== 6) {
             moves.push('left');
         }
 
-        if (spaceIdx !== 2 || spaceIdx !== 5 || spaceIdx !== 8) {
+        if (spaceIdx !== 2 && spaceIdx !== 5 && spaceIdx !== 8) {
             moves.push('right');
         }
 
