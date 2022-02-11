@@ -82,7 +82,7 @@ export default class Board {
             board[idxToSwitch] = 0;
 
             if (!Board.isEqual(board, this.prev)) {
-                const state = new Board(board, this.g + 1, this.tiles);
+                const state = new Board(board, this.g + 1, this);
                 successors.push(state);
             }
         })
