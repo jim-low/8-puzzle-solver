@@ -1,5 +1,6 @@
 import { movePuzzle, resetTiles, goalState } from './puzzle.js';
 import BreadthFirst from './algorithms/breadth-first.js';
+import AStar from './algorithms/aStarSearch/a-star.js';
 import PuzzleAnimator from './animation.js';
 
 const puzzleStates = [
@@ -15,9 +16,6 @@ const puzzleStates = [
     [8, 0, 6, 1, 7, 4, 2, 5, 3]
 ]
 let currentStateIdx = 0;
-
-const animator = new PuzzleAnimator(new BreadthFirst().time(puzzleStates[currentStateIdx]));
-animator.fillPuzzle();
 
 // maybe might not need this
 document.addEventListener('keydown', (e) => {
@@ -57,6 +55,4 @@ document.querySelectorAll('.state-control').forEach(btn => {
     });
 });
 
-// resetTiles();
-// keep the line below commented until further optimized
-// puzzleStates.forEach(state => new BreadthFirst().time(state))
+console.log(AStar.search(puzzleStates[0], goalState));
