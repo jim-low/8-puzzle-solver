@@ -30,9 +30,6 @@ export default class PriorityQueue {
         for (let i = 0; i < this.queue.length; ++i) {
             const currBoard = this.queue[i]
             if (Board.isEqual(board, currBoard.tiles) && currBoard.f < board.f) {
-                console.log('checking f scores');
-                console.log(`${currBoard.f} < ${board.f}`);
-                console.log();
                 return true;
             }
         }
