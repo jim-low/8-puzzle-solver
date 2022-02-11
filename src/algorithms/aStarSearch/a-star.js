@@ -2,7 +2,7 @@ import Board from "./board.js";
 import PriorityQueue from "./priority-queue.js";
 
 export default class AStar {
-    static async search(root, goal) {
+    static search(root, goal) {
         const openList = new PriorityQueue();
 
         const closedList = new PriorityQueue();
@@ -14,16 +14,16 @@ export default class AStar {
 
             const successors = q.getSuccessors();
 
-            successors.forEach(async (successor) => {
-                if (Board.isEqual(successor, goal)) {
+            for (let i = 0; i < successors.length; ++i) {
+                const successor = successors[i];
+                if (Board.isEqual(successor.tiles, goal)) {
                     return Board.constructPath(successor);
                 }
 
-                const res = !openList.checkSuccessorWithLowerPriority(successor) && !closedList.checkSuccessorWithLowerPriority(successor);
-                if (res) {
+                if (!openList.checkSuccessorWithLowerPriority(successor) && !closedList.checkSuccessorWithLowerPriority(successor)) {
                     openList.enqueue(successor);
                 }
-            });
+            }
 
             closedList.enqueue(q);
         }
