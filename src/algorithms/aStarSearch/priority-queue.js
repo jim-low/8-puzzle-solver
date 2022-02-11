@@ -1,3 +1,5 @@
+import Board from './board.js';
+
 export default class PriorityQueue {
     constructor() {
         this.queue = [];
@@ -21,6 +23,20 @@ export default class PriorityQueue {
         }
 
         return this.queue.shift();
+    }
+
+    // TODO: optimize method
+    checkSuccessorWithLowerPriority(board) {
+        for (let i = 0; i < this.queue.length; ++i) {
+            const currBoard = this.queue[i]
+            if (Board.isEqual(board, currBoard.tiles) && currBoard.f < board.f) {
+                console.log('checking f scores');
+                console.log(`${currBoard.f} < ${board.f}`);
+                console.log();
+                return true;
+            }
+        }
+        return false;
     }
 
     size() {
