@@ -18,6 +18,19 @@ export default class Board {
         this.f = this.g + this.h;
     }
 
+    static constructPath(endNode) {
+        const path = [];
+
+        let node = endNode;
+        while (node.prev != null) {
+            path.push(node.tiles);
+            node = node.prev;
+        }
+        path.push(node.tiles);
+
+        return path.reverse();
+    }
+
     getUnmatchedTiles() {
         const unmatched = [];
 
