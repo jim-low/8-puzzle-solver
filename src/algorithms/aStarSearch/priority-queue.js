@@ -1,23 +1,17 @@
 export default class PriorityQueue {
-    // highestPriority keeps track of the current highest priority of the queue
     constructor() {
         this.queue = [];
         this.highestPriority = -1;
     }
 
-    enqueue(data, priority) {
-        const node = {
-            data,
-            priority,
-        };
-
-        if (this.size() === 0 || this.highestPriority < node.priority) {
-            this.queue.push(node);
-            this.highestPriority = node.priority;
+    enqueue(data) {
+        if (this.size() === 0 || this.highestPriority < data.f) {
+            this.queue.push(data);
+            this.highestPriority = data.f;
         } else {
-            const item = this.queue.find(el => el.priority > node.priority);
+            const item = this.queue.find(el => el.f > data.f);
             const insertIdx = this.queue.indexOf(item);
-            this.queue.splice(insertIdx, 0, node);
+            this.queue.splice(insertIdx, 0, data);
         }
     }
 
@@ -26,7 +20,7 @@ export default class PriorityQueue {
             return null;
         }
 
-        return this.queue.shift().data;
+        return this.queue.shift();
     }
 
     size() {
