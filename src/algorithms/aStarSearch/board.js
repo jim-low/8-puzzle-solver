@@ -52,7 +52,7 @@ export default class Board {
         return moves;
     }
 
-    isEqual(arr1, arr2) {
+    static isEqual(arr1, arr2) {
         if (arr1 == null || arr2 == null) {
             return false;
         }
@@ -81,7 +81,7 @@ export default class Board {
             board[spaceIdx] = board[idxToSwitch];
             board[idxToSwitch] = 0;
 
-            if (!this.isEqual(board, this.prev)) {
+            if (!Board.isEqual(board, this.prev)) {
                 const state = new Board(board, this.g + 1, this.tiles);
                 successors.push(state);
             }
