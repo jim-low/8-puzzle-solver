@@ -155,6 +155,7 @@ export default class BreadthFirst {
     /* This post on stackexchange explained the condition when a puzzle
     is unsolvable http://math.stackexchange.com/a/838818
         */
+        // keep this
         checkSolvable(state) {
             let pos = state.indexOf(0);
             let _state = state.slice();
@@ -185,15 +186,20 @@ export default class BreadthFirst {
         let firstElement, secondElement;
         let _state = state.slice();
         this.shuffle(_state);
+        // remove this v
         if (!this.checkSolvable(_state)) {
+            console.log('cannot solve, so i make it can be solved :)');
             firstElement = _state[0] !== 0 ? 0 : 3;
             secondElement = _state[1] !== 0 ? 1 : 3;
             this.swap(_state, firstElement, secondElement);
         }
+        // remove this ^
         console.log('Puzzle to solve: [' + _state + ']');
         return _state;
     }
 
+    // make this static
+    // rename to search(initialState)
     time(initialState) {
         const puzzle = this.generatePuzzle(initialState);
         this.startTime = new Date();
