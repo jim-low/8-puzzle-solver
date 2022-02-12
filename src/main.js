@@ -54,3 +54,17 @@ document.querySelectorAll('.state-control').forEach(btn => {
         animator.newPuzzle(newState);
     });
 });
+
+console.time('A* search');
+let paths = AStar.search(puzzleStates[0], goalState);
+console.log(paths);
+console.timeEnd('A* search');
+
+console.log(window.performance.memory);
+
+console.time('Breadth First');
+paths = new BreadthFirst().time(puzzleStates[0]);
+console.log(paths);
+console.timeEnd('Breadth First');
+
+console.log(window.performance.memory);
