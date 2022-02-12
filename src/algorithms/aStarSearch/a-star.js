@@ -18,7 +18,7 @@ export default class AStar {
                     return Board.constructPath(successor);
                 }
 
-                if (!openList.checkSuccessorWithLowerPriority(successor)) {
+                if (!openList.checkSuccessorWithLowerPriority(successor.tiles)) {
                     openList.enqueue(successor);
                 }
             }
