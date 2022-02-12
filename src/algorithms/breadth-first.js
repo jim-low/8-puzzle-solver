@@ -1,6 +1,7 @@
 // need to refactor time() and getSuccessors() method
 // maybe add method to reset initial states
 // remove unused parameters
+// remove console.log
 export default class BreadthFirst {
     constructor() {
         this.endTime = 0
@@ -94,6 +95,7 @@ export default class BreadthFirst {
         state[to] = _;
     }
 
+    // remove
     statesPerSecond() {
         let now = new Date();
         if (now.getTime() - this.startTime.getTime() >= this.counter) {
@@ -172,6 +174,7 @@ export default class BreadthFirst {
         }
 
     /* Fisher-Yates shuffle http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle*/
+        // remove
         shuffle(array) {
             let size = array.length;
             let rand;
@@ -182,6 +185,7 @@ export default class BreadthFirst {
             return array;
         }
 
+    // remove
     generatePuzzle(state) {
         let firstElement, secondElement;
         let _state = state.slice();
@@ -198,8 +202,6 @@ export default class BreadthFirst {
         return _state;
     }
 
-    // make this static
-    // rename to search(initialState)
     time(initialState) {
         const puzzle = this.generatePuzzle(initialState);
         this.startTime = new Date();
@@ -209,6 +211,12 @@ export default class BreadthFirst {
         console.log(result.length);
         this.endTime = new Date();
         console.log('Operation took ' + (this.endTime.getTime() - this.startTime.getTime()) + ' msec');
+
         return result;
+    }
+
+    // implement reset() method
+    // reset all instance variables to initial state/value
+    reset() {
     }
 }
