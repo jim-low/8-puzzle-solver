@@ -25,7 +25,6 @@ export default class PriorityQueue {
         return this.queue.shift();
     }
 
-    // TODO: optimize method
     checkSuccessorWithLowerPriority(board) {
         for (let i = 0; i < this.queue.length; ++i) {
             const currBoard = this.queue[i]

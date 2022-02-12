@@ -46,20 +46,20 @@ export default class Board {
     getPossibleMoves(spaceIdx) {
         const moves = [];
 
-        if (spaceIdx >= 0 && spaceIdx <= 5) {
-            moves.push('down');
-        }
-
         if (spaceIdx >= 3 && spaceIdx <= 8) {
             moves.push('up');
         }
 
-        if (spaceIdx !== 0 && spaceIdx !== 3 && spaceIdx !== 6) {
-            moves.push('left');
-        }
-
         if (spaceIdx !== 2 && spaceIdx !== 5 && spaceIdx !== 8) {
             moves.push('right');
+        }
+
+        if (spaceIdx >= 0 && spaceIdx <= 5) {
+            moves.push('down');
+        }
+
+        if (spaceIdx !== 0 && spaceIdx !== 3 && spaceIdx !== 6) {
+            moves.push('left');
         }
 
         return moves;
@@ -104,6 +104,10 @@ export default class Board {
     }
 
     manhattan() {
+        if (this.prev === 0) {
+            return 0;
+        }
+
         let cost = 0;
 
         this.getUnmatchedTiles().forEach(unmatchedTile => {
