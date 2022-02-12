@@ -71,7 +71,7 @@ console.log(window.performance.memory);
 
 puzzleStates.forEach((puzz, i) => {
     // console.time('A* search');
-    // let paths = AStar.search(puzzleStates[i], goalState);
+    // paths = AStar.search(puzzleStates[i], goalState);
     // console.timeEnd('A* search');
     // console.log(paths);
 
