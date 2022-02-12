@@ -76,7 +76,7 @@ puzzleStates.forEach((puzz, i) => {
     // console.log(paths);
 
     console.time('Breadth First Search');
-    const paths = new BreadthFirst().time(puzzleStates[i]);
+    let paths = new BreadthFirst().time(puzzleStates[i]);
     console.timeEnd('Breadth First Search');
     console.log(paths);
 })
