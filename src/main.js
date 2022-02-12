@@ -54,5 +54,3 @@ document.querySelectorAll('.state-control').forEach(btn => {
         animator.newPuzzle(newState);
     });
 });
-
-console.log(AStar.search(puzzleStates[0], goalState));
