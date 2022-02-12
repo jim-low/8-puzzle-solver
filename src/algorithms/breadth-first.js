@@ -16,7 +16,7 @@ export default class BreadthFirst {
         this.goalState = [1, 2, 3, 4, 5, 6, 7, 8, 0]
     }
 
-    move(state, successors, pos, steps) {
+    move(state, pos, steps) {
         let newState;
         newState = state.slice();
         this.swap(newState, pos, pos + steps);
@@ -32,6 +32,18 @@ export default class BreadthFirst {
         return hash;
     }
 
+    generateNode(newState, state, _state, successors, pos, step){
+        newState = this.move(state, successors, pos, step);
+        if (!this.compare(newState, state.prev)) {
+            _state = this.hashState(newState);
+            if (typeof this.hash[_state] === 'undefined') {
+                this.hash[_state] = newState;
+                newState.prev = state;
+                successors.push(newState);
+            }
+        }
+    }
+
     getSuccessors(state) {
         let newState, _state;
         let successors = [];
@@ -40,51 +52,28 @@ export default class BreadthFirst {
         let col = pos % 3;
         if (row > 0) {
             //move up
-            newState = this.move(state, successors, pos, -3);
-            if (!this.compare(newState, state.prev)) {
-                _state = this.hashState(newState);
-                if (typeof this.hash[_state] === 'undefined') {
-                    this.hash[_state] = newState;
-                    newState.prev = state;
-                    successors.push(newState);
-                }
-            }
+//            newState = this.move(state, successors, pos, -3);
+            this.generateNode(newState, state, _state, successors, pos, -3);
+//            if (!this.compare(newState, state.prev)) {
+//                _state = this.hashState(newState);
+//                if (typeof this.hash[_state] === 'undefined') {
+//                    this.hash[_state] = newState;
+//                    newState.prev = state;
+//                    successors.push(newState);
+//                }
+//            }
         }
         if (col > 0) {
             //move left
-            newState = this.move(state, successors, pos, -1);
-            if (!this.compare(newState, state.prev)) {
-                _state = this.hashState(newState);
-                if (typeof this.hash[_state] === 'undefined') {
-                    this.hash[_state] = newState;
-                    newState.prev = state;
-                    successors.push(newState);
-                }
-            }
+            this.generateNode(newState, state, _state, successors, pos, -1);
         }
         if (row < 2) {
             //move down
-            newState = this.move(state, successors, pos, 3);
-            if (!this.compare(newState, state.prev)) {
-                _state = this.hashState(newState);
-                if (typeof this.hash[_state] === 'undefined') {
-                    this.hash[_state] = newState;
-                    newState.prev = state;
-                    successors.push(newState);
-                }
-            }
+            this.generateNode(newState, state, _state, successors, pos, 3);
         }
         if (col < 2) {
             //move right
-            newState = this.move(state, successors, pos, 1);
-            if (!this.compare(newState, state.prev)) {
-                _state = this.hashState(newState);
-                if (typeof this.hash[_state] === 'undefined') {
-                    this.hash[_state] = newState;
-                    newState.prev = state;
-                    successors.push(newState);
-                }
-            }
+            this.generateNode(newState, state, _state, successors, pos, 1);
         }
         return successors;
     }
@@ -121,7 +110,7 @@ export default class BreadthFirst {
         return result.reverse();
     }
 
-    search(state, goalState) {
+    search(state) {
         this.values = new Array(1000000);
         state.prev = null;
         this.values[0] = state;
@@ -211,12 +200,22 @@ export default class BreadthFirst {
         console.log(result.length);
         this.endTime = new Date();
         console.log('Operation took ' + (this.endTime.getTime() - this.startTime.getTime()) + ' msec');
-
+        this.reset();
         return result;
     }
 
     // implement reset() method
     // reset all instance variables to initial state/value
     reset() {
+        this.endTime = 0
+        this.startTime = 0
+        this.counted = 0
+        this.counter = 1000
+        this.allSuc = []
+        this.hash = {}
+        this.values = new Array(1000000)
+        this.size = 0
+
+        this.goalState = [1, 2, 3, 4, 5, 6, 7, 8, 0]
     }
 }

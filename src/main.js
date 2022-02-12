@@ -55,28 +55,28 @@ document.querySelectorAll('.state-control').forEach(btn => {
     });
 });
 
-console.time('A* search');
-let paths = AStar.search(puzzleStates[0], goalState);
-console.log(paths);
-console.timeEnd('A* search');
+// console.time('A* search');
+// let paths = AStar.search(puzzleStates[0], goalState);
+// console.log(paths);
+// console.timeEnd('A* search');
 
-console.log(window.performance.memory);
+// console.log(window.performance.memory);
 
-console.time('Breadth First');
-paths = new BreadthFirst().time(puzzleStates[0]);
-console.log(paths);
-console.timeEnd('Breadth First');
+// console.time('Breadth First');
+// paths = new BreadthFirst().time(puzzleStates[0]);
+// console.log(paths);
+// console.timeEnd('Breadth First');
 
-console.log(window.performance.memory);
+// console.log(window.performance.memory);
 
 puzzleStates.forEach((puzz, i) => {
     // console.time('A* search');
-    // paths = AStar.search(puzzleStates[i], goalState);
+    // let paths = AStar.search(puzzleStates[i], goalState);
     // console.timeEnd('A* search');
     // console.log(paths);
 
     console.time('Breadth First Search');
-    paths = new BreadthFirst().time(puzzleStates[i]);
+    const paths = new BreadthFirst().time(puzzleStates[i]);
     console.timeEnd('Breadth First Search');
     console.log(paths);
 })
