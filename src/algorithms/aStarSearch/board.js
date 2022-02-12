@@ -104,6 +104,10 @@ export default class Board {
     }
 
     manhattan() {
+        if (this.prev === 0) {
+            return 0;
+        }
+
         let cost = 0;
 
         this.getUnmatchedTiles().forEach(unmatchedTile => {
