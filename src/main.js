@@ -10,10 +10,10 @@ const puzzleStates = [
     [4, 3, 8, 5, 7, 2, 1, 0, 6],
     [1, 7, 8, 4, 6, 2, 5, 3, 0],
     [0, 7, 1, 2, 4, 5, 8, 3, 6],
-    [5, 4, 7, 0, 6, 3, 2, 1, 8],
-    [2, 5, 8, 4, 1, 3, 6, 0, 7],
+    [3, 6, 8, 1, 7, 2, 4, 5, 0],
+    [2, 5, 8, 7, 0, 6, 1, 3, 4],
     [4, 6, 1, 8, 3, 2, 5, 7, 0],
-    [8, 0, 6, 1, 7, 4, 2, 5, 3]
+    [8, 7, 0, 5, 1, 6, 2, 3, 4],
 ]
 let currentStateIdx = 0;
 
@@ -55,4 +55,32 @@ document.querySelectorAll('.state-control').forEach(btn => {
     });
 });
 
-console.log(AStar.search(puzzleStates[0], goalState));
+// console.time('A* search');
+// let paths = AStar.search(puzzleStates[0], goalState);
+// console.log(paths);
+// console.timeEnd('A* search');
+
+// console.log(window.performance.memory);
+
+// console.time('Breadth First');
+// paths = new BreadthFirst().time(puzzleStates[0]);
+// console.log(paths);
+// console.timeEnd('Breadth First');
+
+// console.log(window.performance.memory);
+console.time('Breadth First Search');
+puzzleStates.forEach((puzz, i) => {
+    // console.time('A* search');
+    // let paths = AStar.search(puzzleStates[i], goalState);
+    // console.timeEnd('A* search');
+    // console.log(paths);
+
+    console.time('Breadth First Search');
+    let paths = new BreadthFirst().time(puzzleStates[i]);
+    console.log(paths);
+    console.timeEnd('Breadth First Search');
+    console.log(window.performance.memory);
+})
+
+console.timeEnd('Breadth First Search');
+console.log(window.performance.memory);
