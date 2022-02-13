@@ -1,19 +1,10 @@
-// need to refactor time() and getSuccessors() method
-// maybe add method to reset initial states
-// remove unused parameters
-// remove console.log
+import { goalState } from '../puzzle.js';
+
 export default class BreadthFirst {
     constructor() {
-        this.endTime = 0
-        this.startTime = 0
-        this.counted = 0
-        this.counter = 1000
-        this.allSuc = []
         this.hash = {}
         this.values = new Array(1000000)
         this.size = 0
-
-        this.goalState = [1, 2, 3, 4, 5, 6, 7, 8, 0]
     }
 
     move(state, pos, steps) {
@@ -52,16 +43,7 @@ export default class BreadthFirst {
         let col = pos % 3;
         if (row > 0) {
             //move up
-//            newState = this.move(state, successors, pos, -3);
             this.generateNode(newState, state, _state, successors, pos, -3);
-//            if (!this.compare(newState, state.prev)) {
-//                _state = this.hashState(newState);
-//                if (typeof this.hash[_state] === 'undefined') {
-//                    this.hash[_state] = newState;
-//                    newState.prev = state;
-//                    successors.push(newState);
-//                }
-//            }
         }
         if (col > 0) {
             //move left
@@ -96,17 +78,15 @@ export default class BreadthFirst {
                 }
             }
         }
-        console.log(this.size);
         return result.reverse();
     }
 
     search(state) {
-        this.values = new Array(1000000);
         state.prev = null;
         this.values[0] = state;
         this.size++;
         for (let i = 0; i < this.size; i++) {
-            if (this.compare(this.goalState, this.values[i])) {
+            if (this.compare(goalState, this.values[i])) {
                 return this.collateStates(i);
             } else {
                 let _successors = this.getSuccessors(this.values[i]);
@@ -134,9 +114,7 @@ export default class BreadthFirst {
     }
 
     /* This post on stackexchange explained the condition when a puzzle
-    is unsolvable http://math.stackexchange.com/a/838818
-        */
-        // keep this
+    is unsolvable http://math.stackexchange.com/a/838818 */
         checkSolvable(state) {
             let pos = state.indexOf(0);
             let _state = state.slice();
@@ -153,14 +131,7 @@ export default class BreadthFirst {
         }
 
     time(initialState) {
-
-        this.startTime = new Date();
-        console.log(initialState);
-        let result = this.search(initialState, this.goalState);
-        console.log(result);
-        console.log(result.length);
-        this.endTime = new Date();
-        console.log('Operation took ' + (this.endTime.getTime() - this.startTime.getTime()) + ' msec');
+        let result = this.search(initialState, goalState);
         this.reset();
         return result;
     }
@@ -168,15 +139,8 @@ export default class BreadthFirst {
     // implement reset() method
     // reset all instance variables to initial state/value
     reset() {
-        this.endTime = 0
-        this.startTime = 0
-        this.counted = 0
-        this.counter = 1000
-        this.allSuc = []
         this.hash = {}
         this.values = new Array(1000000)
         this.size = 0
-
-        this.goalState = [1, 2, 3, 4, 5, 6, 7, 8, 0]
     }
 }
