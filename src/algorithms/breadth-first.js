@@ -33,7 +33,7 @@ export default class BreadthFirst {
     }
 
     generateNode(newState, state, _state, successors, pos, step){
-        newState = this.move(state, successors, pos, step);
+        newState = this.move(state, pos, step);
         if (!this.compare(newState, state.prev)) {
             _state = this.hashState(newState);
             if (typeof this.hash[_state] === 'undefined') {
@@ -84,16 +84,6 @@ export default class BreadthFirst {
         state[to] = _;
     }
 
-    // remove
-    statesPerSecond() {
-        let now = new Date();
-        if (now.getTime() - this.startTime.getTime() >= this.counter) {
-            console.log('this.counted', this.counter, this.allSuc.length - this.counted);
-            this.counted = this.allSuc.length;
-            this.counter += 1000;
-        }
-    }
-
     collateStates(i) {
         let _ = this.values[i].prev;
         let result = [this.values[i]];
@@ -116,7 +106,6 @@ export default class BreadthFirst {
         this.values[0] = state;
         this.size++;
         for (let i = 0; i < this.size; i++) {
-            this.statesPerSecond();
             if (this.compare(this.goalState, this.values[i])) {
                 return this.collateStates(i);
             } else {
@@ -130,6 +119,7 @@ export default class BreadthFirst {
         return [];
     }
 
+    //compare the current puzzle state with the goal state
     compare(arr1, arr2) {
         if (!arr1 || !arr2) {
             return false;
@@ -162,45 +152,16 @@ export default class BreadthFirst {
             return count % 2 === 0;
         }
 
-    /* Fisher-Yates shuffle http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle*/
-        // remove
-        shuffle(array) {
-            let size = array.length;
-            let rand;
-            for (let i = 1; i < this.size; i += 1) {
-                rand = Math.round(Math.random() * i);
-                this.swap(array, rand, i);
-            }
-            return array;
-        }
-
-    // remove
-    generatePuzzle(state) {
-        let firstElement, secondElement;
-        let _state = state.slice();
-        this.shuffle(_state);
-        // remove this v
-        if (!this.checkSolvable(_state)) {
-            console.log('cannot solve, so i make it can be solved :)');
-            firstElement = _state[0] !== 0 ? 0 : 3;
-            secondElement = _state[1] !== 0 ? 1 : 3;
-            this.swap(_state, firstElement, secondElement);
-        }
-        // remove this ^
-        console.log('Puzzle to solve: [' + _state + ']');
-        return _state;
-    }
-
     time(initialState) {
-        const puzzle = this.generatePuzzle(initialState);
+
         this.startTime = new Date();
-        console.log(puzzle);
-        let result = this.search(puzzle, this.goalState);
+        console.log(initialState);
+        let result = this.search(initialState, this.goalState);
         console.log(result);
         console.log(result.length);
         this.endTime = new Date();
         console.log('Operation took ' + (this.endTime.getTime() - this.startTime.getTime()) + ' msec');
-        BreadthFirst.reset();
+        this.reset();
         return result;
     }
 

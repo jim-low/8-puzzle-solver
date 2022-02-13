@@ -68,7 +68,7 @@ document.querySelectorAll('.state-control').forEach(btn => {
 // console.timeEnd('Breadth First');
 
 // console.log(window.performance.memory);
-
+console.time('Breadth First Search');
 puzzleStates.forEach((puzz, i) => {
     // console.time('A* search');
     // let paths = AStar.search(puzzleStates[i], goalState);
@@ -77,6 +77,10 @@ puzzleStates.forEach((puzz, i) => {
 
     console.time('Breadth First Search');
     let paths = new BreadthFirst().time(puzzleStates[i]);
-    console.timeEnd('Breadth First Search');
     console.log(paths);
+    console.timeEnd('Breadth First Search');
+    console.log(window.performance.memory);
 })
+
+console.timeEnd('Breadth First Search');
+console.log(window.performance.memory);
