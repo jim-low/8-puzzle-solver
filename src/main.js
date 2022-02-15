@@ -1,6 +1,6 @@
 import { movePuzzle, resetTiles, goalState } from './puzzle.js';
 import BreadthFirst from './algorithms/breadth-first.js';
-import DepthFirst from './algorithms/depth-first.js';
+import DepthFirst from './algorithms/iterative-deepening.js';
 import AStar from './algorithms/aStarSearch/a-star.js';
 import PuzzleAnimator from './animation.js';
 
@@ -85,4 +85,5 @@ document.querySelectorAll('.state-control').forEach(btn => {
 
 //console.timeEnd('Breadth First Search');
 //console.log(window.performance.memory);
-DepthFirst.depthFirstSearch(puzzleStates[0], goalState)
+const solution = DepthFirst.search([0, 1, 2, 4, 5, 3, 7, 8, 6], goalState);
+console.log(solution);

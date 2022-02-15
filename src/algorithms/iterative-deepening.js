@@ -1,17 +1,30 @@
 export default class DepthFirst{
-    static search(graph, root, goal){
+
+    static search(root, goal){
         let limit = 0;
+        let result = DepthFirst.depthFirstSearch(root, goal, limit + 1);
+        while(!result){
+            ++limit;
+            result = DepthFirst.depthFirstSearch(root, goal, limit + 1);
+        }
+        return result;
     }
 
-    static depthFirstSearch(rootState, goalState, current = null, visited = []){
+    static depthFirstSearch(rootState, goalState, limit, current = null, visited = []){
+        //debugger
         if (visited.length === 0) {
             visited.push(rootState);
         }
 
         if (!current) {
-            current = {}
-            current.data = rootState;
+            current = {data: rootState}
+            current.step = 0;  
             current.prev = null;
+            current.isRoot = true;
+        }
+
+        if (current.step > limit){
+            return DepthFirst.depthFirstSearch(rootState, goalState, limit, current.prev, visited);
         }
 
         // isEqual you implement
@@ -21,29 +34,47 @@ export default class DepthFirst{
 
         // you implement
         const successors = DepthFirst.getSuccessors(current)
-        console.log(current.data);
-        console.log(successors);
-        return
+        const lastSuccessor = successors.at(-1);
+            if (DepthFirst.isVisited(lastSuccessor.data, visited)){
+                return current.isRoot ?null: DepthFirst.depthFirstSearch(rootState, goalState, limit, current.prev, visited);
+            }
         for (let i = 0; i < successors.length; ++i) {
-            const currSuccessor = successor[i];
-            if (!DepthFirst.isEqual(current.data, currSuccessor.data)) {
-                currSuccessor.prev = current;
-
-                visited.push(currSuccessor);
-                return DepthFirst.depthFirstSearch(graph, rootState, goalState, currSuccessor, visited);
+            const successor = successors[i];
+            if (!DepthFirst.isVisited(successor.data, visited)){
+                visited.push(successor.data);
+                return DepthFirst.depthFirstSearch(rootState, goalState, limit, successor, visited);
             }
         }
 
         // go backwards
-        return DepthFirst.depthFirstSearch(rootState, goalState, current.prev, visited);
+        return DepthFirst.depthFirstSearch(rootState, goalState, limit, current.prev, visited);
     }
 
+    static isVisited(node, visited){
+        for(let i = 0; i < visited.length; i++){
+            if(DepthFirst.isEqual(node, visited[i])){
+                return true;
+            }
+        }
+        return false;
+    }
     /*
     node = {
         data: number[],
         prev: node
     } 
     */
+    static constructPath(node){
+        const path = []; 
+        let current = node;
+        while (current.prev != null){
+            path.push(current.data);
+            current =  current.prev;
+        }
+        path.push(current.data);
+        return path.reverse();
+    }
+
     static getSuccessors(node) {
         const successors = [];
         const spaceIndex = node.data.indexOf(0);
@@ -56,7 +87,7 @@ export default class DepthFirst{
             state[spaceIndex + move] = 0;
             //compare new succesors with node.prev.data
             if (node.prev == null || !DepthFirst.isEqual(state, node.prev.data)){
-                successors.push(state);
+                successors.push({data: state, prev: node, step: node.step + 1, isRoot: false});
             }
             //if not equal then push to succesors array
 
