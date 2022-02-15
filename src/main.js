@@ -1,5 +1,6 @@
 import { movePuzzle, resetTiles, goalState } from './puzzle.js';
 import BreadthFirst from './algorithms/breadth-first.js';
+import DepthFirst from './algorithms/depth-first.js';
 import AStar from './algorithms/aStarSearch/a-star.js';
 import PuzzleAnimator from './animation.js';
 
@@ -29,7 +30,7 @@ document.addEventListener('keydown', (e) => {
 document.querySelectorAll('.animation-control').forEach(btn => {
     btn.addEventListener('click', () => {
         const instruction = btn.classList[1];
-        animator[instruction]();
+        //animator[instruction]();
     });
 });
 
@@ -68,19 +69,20 @@ document.querySelectorAll('.state-control').forEach(btn => {
 // console.timeEnd('Breadth First');
 
 // console.log(window.performance.memory);
-console.time('Breadth First Search');
-puzzleStates.forEach((puzz, i) => {
+//console.time('Breadth First Search');
+//puzzleStates.forEach((puzz, i) => {
     // console.time('A* search');
     // let paths = AStar.search(puzzleStates[i], goalState);
     // console.timeEnd('A* search');
     // console.log(paths);
 
-    console.time('Breadth First Search');
-    let paths = new BreadthFirst().time(puzzleStates[i]);
-    console.log(paths);
-    console.timeEnd('Breadth First Search');
-    console.log(window.performance.memory);
-})
+    //console.time('Breadth First Search');
+    //let paths = new BreadthFirst().time(puzzleStates[i]);
+    //console.log(paths);
+    //console.timeEnd('Breadth First Search');
+    //console.log(window.performance.memory);
+//})
 
-console.timeEnd('Breadth First Search');
-console.log(window.performance.memory);
+//console.timeEnd('Breadth First Search');
+//console.log(window.performance.memory);
+DepthFirst.depthFirstSearch(puzzleStates[0], goalState)

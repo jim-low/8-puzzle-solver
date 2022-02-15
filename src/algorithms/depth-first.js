@@ -1,32 +1,106 @@
-export const dfs = (grid, startNode, finishNode) => {
-    const unvisited = [];
-    const visitedNodesInOrder = [];
-    startNode.isVisted = true;
-    startNode.previousNode = null;
-    unvisited.push(startNode);
-    visitedNodesInOrder.push(startNode);
-    while (unvisited.length !== 0) {
-        let currentNode = unvisited.pop();
-        if (currentNode === finishNode) return visitedNodesInOrder;
-        currentNode.isVisited = true;
-        visitedNodesInOrder.push(currentNode);
-        let neighbors = getUnvisitedNeighbors(currentNode, grid);
-
-        for (const neighbor of neighbors) {
-            neighbor.previousNode = currentNode;
-            unvisited.push(neighbor);
-        }
+export default class DepthFirst{
+    static search(graph, root, goal){
+        let limit = 0;
     }
-    return visitedNodesInOrder;
-}
 
-export const getUnvisitedNeighbors = (node, grid) => {
-    let neighbors = [];
-    const { col, row } = node;
-    if (row > 0) neighbors.push(grid[row - 1][col]);
-    if (row < grid.length - 1) neighbors.push(grid[row + 1][col]);
-    if (col > 0) neighbors.push(grid[row][col - 1]);
-    if (col < grid[0].length - 1) neighbors.push(grid[row][col + 1]);
-    neighbors = neighbors.filter((neighbor) => !neighbor.isVisited);
-    return neighbors.filter(neighbor => !neighbor.isWall);
-};
+    static depthFirstSearch(rootState, goalState, current = null, visited = []){
+        if (visited.length === 0) {
+            visited.push(rootState);
+        }
+
+        if (!current) {
+            current = {}
+            current.data = rootState;
+            current.prev = null;
+        }
+
+        // isEqual you implement
+        if (DepthFirst.isEqual(current.data, goalState)) {
+            return DepthFirst.constructPath(current);
+        }
+
+        // you implement
+        const successors = DepthFirst.getSuccessors(current)
+        console.log(current.data);
+        console.log(successors);
+        return
+        for (let i = 0; i < successors.length; ++i) {
+            const currSuccessor = successor[i];
+            if (!DepthFirst.isEqual(current.data, currSuccessor.data)) {
+                currSuccessor.prev = current;
+
+                visited.push(currSuccessor);
+                return DepthFirst.depthFirstSearch(graph, rootState, goalState, currSuccessor, visited);
+            }
+        }
+
+        // go backwards
+        return DepthFirst.depthFirstSearch(rootState, goalState, current.prev, visited);
+    }
+
+    /*
+    node = {
+        data: number[],
+        prev: node
+    } 
+    */
+    static getSuccessors(node) {
+        const successors = [];
+        const spaceIndex = node.data.indexOf(0);
+        
+        DepthFirst.getPossibleMoves(node.data).forEach(move => {
+            //first copy node.data 
+            const state = [...node.data];
+            //switch space index
+            state[spaceIndex] = state[spaceIndex + move];
+            state[spaceIndex + move] = 0;
+            //compare new succesors with node.prev.data
+            if (node.prev == null || !DepthFirst.isEqual(state, node.prev.data)){
+                successors.push(state);
+            }
+            //if not equal then push to succesors array
+
+        })
+        return successors;
+    }
+
+    static getPossibleMoves(puzzle){
+        const moves = [];
+        const index = puzzle.indexOf(0);
+  
+        if (index != 0 && index != 1 && index != 2){
+            moves.push(-3); 
+        }
+
+        if (index != 6 && index != 7 && index != 8){
+            moves.push(3);
+        }
+
+        if (index != 0 && index != 3 && index != 6){
+            moves.push(-1); 
+        }
+
+        if (index != 2 && index != 5 && index != 8){
+            moves.push(1); 
+        }
+
+        return moves;
+    }
+
+    static isEqual(arr1, arr2) {
+        if (arr1 == null || arr2 == null) {
+            return false;
+        }
+
+        if (arr1.length !== arr2.length) {
+            return false;
+        }
+
+        for (let i = 0; i < arr1.length; ++i) {
+            if (arr1[i] !== arr2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
