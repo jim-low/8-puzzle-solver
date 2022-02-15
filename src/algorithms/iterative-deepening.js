@@ -1,11 +1,11 @@
-export default class DepthFirst{
+export default class IterativeDeepening{
 
     static search(root, goal){
         let limit = 0;
-        let result = DepthFirst.depthFirstSearch(root, goal, limit + 1);
+        let result = IterativeDeepening.depthFirstSearch(root, goal, limit + 1);
         while(!result){
             ++limit;
-            result = DepthFirst.depthFirstSearch(root, goal, limit + 1);
+            result = IterativeDeepening.depthFirstSearch(root, goal, limit + 1);
         }
         return result;
     }
@@ -18,41 +18,41 @@ export default class DepthFirst{
 
         if (!current) {
             current = {data: rootState}
-            current.step = 0;  
+            current.step = 0;
             current.prev = null;
             current.isRoot = true;
         }
 
         if (current.step > limit){
-            return DepthFirst.depthFirstSearch(rootState, goalState, limit, current.prev, visited);
+            return IterativeDeepening.depthFirstSearch(rootState, goalState, limit, current.prev, visited);
         }
 
         // isEqual you implement
-        if (DepthFirst.isEqual(current.data, goalState)) {
-            return DepthFirst.constructPath(current);
+        if (IterativeDeepening.isEqual(current.data, goalState)) {
+            return IterativeDeepening.constructPath(current);
         }
 
         // you implement
-        const successors = DepthFirst.getSuccessors(current)
+        const successors = IterativeDeepening.getSuccessors(current)
         const lastSuccessor = successors.at(-1);
-            if (DepthFirst.isVisited(lastSuccessor.data, visited)){
-                return current.isRoot ?null: DepthFirst.depthFirstSearch(rootState, goalState, limit, current.prev, visited);
+            if (IterativeDeepening.isVisited(lastSuccessor.data, visited)){
+                return current.isRoot ?null: IterativeDeepening.depthFirstSearch(rootState, goalState, limit, current.prev, visited);
             }
         for (let i = 0; i < successors.length; ++i) {
             const successor = successors[i];
-            if (!DepthFirst.isVisited(successor.data, visited)){
+            if (!IterativeDeepening.isVisited(successor.data, visited)){
                 visited.push(successor.data);
-                return DepthFirst.depthFirstSearch(rootState, goalState, limit, successor, visited);
+                return IterativeDeepening.depthFirstSearch(rootState, goalState, limit, successor, visited);
             }
         }
 
         // go backwards
-        return DepthFirst.depthFirstSearch(rootState, goalState, limit, current.prev, visited);
+        return IterativeDeepening.depthFirstSearch(rootState, goalState, limit, current.prev, visited);
     }
 
     static isVisited(node, visited){
         for(let i = 0; i < visited.length; i++){
-            if(DepthFirst.isEqual(node, visited[i])){
+            if(IterativeDeepening.isEqual(node, visited[i])){
                 return true;
             }
         }
@@ -62,10 +62,10 @@ export default class DepthFirst{
     node = {
         data: number[],
         prev: node
-    } 
+    }
     */
     static constructPath(node){
-        const path = []; 
+        const path = [];
         let current = node;
         while (current.prev != null){
             path.push(current.data);
@@ -78,15 +78,15 @@ export default class DepthFirst{
     static getSuccessors(node) {
         const successors = [];
         const spaceIndex = node.data.indexOf(0);
-        
-        DepthFirst.getPossibleMoves(node.data).forEach(move => {
-            //first copy node.data 
+
+        IterativeDeepening.getPossibleMoves(node.data).forEach(move => {
+            //first copy node.data
             const state = [...node.data];
             //switch space index
             state[spaceIndex] = state[spaceIndex + move];
             state[spaceIndex + move] = 0;
             //compare new succesors with node.prev.data
-            if (node.prev == null || !DepthFirst.isEqual(state, node.prev.data)){
+            if (node.prev == null || !IterativeDeepening.isEqual(state, node.prev.data)){
                 successors.push({data: state, prev: node, step: node.step + 1, isRoot: false});
             }
             //if not equal then push to succesors array
@@ -98,9 +98,9 @@ export default class DepthFirst{
     static getPossibleMoves(puzzle){
         const moves = [];
         const index = puzzle.indexOf(0);
-  
+
         if (index != 0 && index != 1 && index != 2){
-            moves.push(-3); 
+            moves.push(-3);
         }
 
         if (index != 6 && index != 7 && index != 8){
@@ -108,11 +108,11 @@ export default class DepthFirst{
         }
 
         if (index != 0 && index != 3 && index != 6){
-            moves.push(-1); 
+            moves.push(-1);
         }
 
         if (index != 2 && index != 5 && index != 8){
-            moves.push(1); 
+            moves.push(1);
         }
 
         return moves;
