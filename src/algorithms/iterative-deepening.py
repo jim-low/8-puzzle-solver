@@ -1,5 +1,5 @@
 import sys
-import numpy as nump
+import numpy as np
 
 
 class Node:
@@ -52,22 +52,22 @@ class Puzzle:
 		results = []
 		
 		if row > 0:
-			mat1 = nump.copy(mat)
+			mat1 = np.copy(mat)
 			mat1[row][col] = mat1[row - 1][col]
 			mat1[row - 1][col] = 0
 			results.append(('up', [mat1, (row - 1, col)]))
 		if col > 0:
-			mat1 = nump.copy(mat)
+			mat1 = np.copy(mat)
 			mat1[row][col] = mat1[row][col - 1]
 			mat1[row][col - 1] = 0
 			results.append(('left', [mat1, (row, col - 1)]))
 		if row < 2:
-			mat1 = nump.copy(mat)
+			mat1 = np.copy(mat)
 			mat1[row][col] = mat1[row + 1][col]
 			mat1[row + 1][col] = 0
 			results.append(('down', [mat1, (row + 1, col)]))
 		if col < 2:
-			mat1 = nump.copy(mat)
+			mat1 = np.copy(mat)
 			mat1[row][col] = mat1[row][col + 1]
 			mat1[row][col + 1] = 0
 			results.append(('right', [mat1, (row, col + 1)]))
@@ -126,8 +126,8 @@ class Puzzle:
 					frontier.add(child)
 
 
-start = nump.array([[1, 2, 3], [8, 0, 4], [7, 6, 5]])
-goal = nump.array([[1, 2, 3], [4, 5, 6], [7, 8, 0]])
+start = np.array([[1, 2, 3], [8, 0, 4], [7, 6, 5]])
+goal = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 0]])
 
 
 startIndex = (1, 1)
