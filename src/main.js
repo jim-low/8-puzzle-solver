@@ -56,34 +56,13 @@ document.querySelectorAll('.state-control').forEach(btn => {
     });
 });
 
-// console.time('A* search');
-// let paths = AStar.search(puzzleStates[0], goalState);
-// console.log(paths);
-// console.timeEnd('A* search');
+let path = [];
+puzzleStates.forEach(puzz => {
+    // path = new BreadthFirst().time(puzz);
+    // console.log(path);
 
-// console.log(window.performance.memory);
+    // path = AStar.search(puzz, goalState);
+    // console.log(path);
+});
 
-// console.time('Breadth First');
-// paths = new BreadthFirst().time(puzzleStates[0]);
-// console.log(paths);
-// console.timeEnd('Breadth First');
-
-// console.log(window.performance.memory);
-//console.time('Breadth First Search');
-//puzzleStates.forEach((puzz, i) => {
-    // console.time('A* search');
-    // let paths = AStar.search(puzzleStates[i], goalState);
-    // console.timeEnd('A* search');
-    // console.log(paths);
-
-    //console.time('Breadth First Search');
-    //let paths = new BreadthFirst().time(puzzleStates[i]);
-    //console.log(paths);
-    //console.timeEnd('Breadth First Search');
-    //console.log(window.performance.memory);
-//})
-
-//console.timeEnd('Breadth First Search');
-//console.log(window.performance.memory);
-const solution = IterativeDeepening.search([0, 1, 2, 4, 5, 3, 7, 8, 6], goalState);
-console.log(solution);
+!path && alert('Please uncomment code in src/main.js to perform the searches :)');
