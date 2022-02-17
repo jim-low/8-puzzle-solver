@@ -11,4 +11,4 @@ puzzleStates.forEach(puzz => {
     // console.table(path);
 });
 
-path.length === 0 && console.log('Please uncomment code in src/main.js to perform the searches :)');
+path.length === 0 && alert('Please uncomment code in src/main.js to perform the searches :)');
