@@ -2,15 +2,15 @@ export default class IterativeDeepening{
 
     static search(root, goal){
         let limit = 0;
-        let result = IterativeDeepening.depthFirstSearch(root, goal, limit + 1);
+        let result = IterativeDeepening.iterativeDeepeningSearch(root, goal, limit + 1);
         while(!result){
             ++limit;
-            result = IterativeDeepening.depthFirstSearch(root, goal, limit + 1);
+            result = IterativeDeepening.iterativeDeepeningSearch(root, goal, limit + 1);
         }
         return result;
     }
 
-    static depthFirstSearch(rootState, goalState, limit, current = null, visited = []){
+    static iterativeDeepeningSearch(rootState, goalState, limit, current = null, visited = []){
         //debugger
         if (visited.length === 0) {
             visited.push(rootState);
@@ -24,7 +24,7 @@ export default class IterativeDeepening{
         }
 
         if (current.step > limit){
-            return IterativeDeepening.depthFirstSearch(rootState, goalState, limit, current.prev, visited);
+            return IterativeDeepening.iterativeDeepeningSearch(rootState, goalState, limit, current.prev, visited);
         }
 
         // isEqual you implement
@@ -36,18 +36,18 @@ export default class IterativeDeepening{
         const successors = IterativeDeepening.getSuccessors(current)
         const lastSuccessor = successors.at(-1);
             if (IterativeDeepening.isVisited(lastSuccessor.data, visited)){
-                return current.isRoot ?null: IterativeDeepening.depthFirstSearch(rootState, goalState, limit, current.prev, visited);
+                return current.isRoot ?null: IterativeDeepening.iterativeDeepeningSearch(rootState, goalState, limit, current.prev, visited);
             }
         for (let i = 0; i < successors.length; ++i) {
             const successor = successors[i];
             if (!IterativeDeepening.isVisited(successor.data, visited)){
                 visited.push(successor.data);
-                return IterativeDeepening.depthFirstSearch(rootState, goalState, limit, successor, visited);
+                return IterativeDeepening.iterativeDeepeningSearch(rootState, goalState, limit, successor, visited);
             }
         }
 
         // go backwards
-        return IterativeDeepening.depthFirstSearch(rootState, goalState, limit, current.prev, visited);
+        return IterativeDeepening.iterativeDeepeningSearch(rootState, goalState, limit, current.prev, visited);
     }
 
     static isVisited(node, visited){
