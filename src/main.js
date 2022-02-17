@@ -5,10 +5,10 @@ import AStar from './algorithms/aStarSearch/a-star.js';
 let path = [];
 puzzleStates.forEach(puzz => {
     // path = new BreadthFirst().time(puzz);
-    // console.log(path);
+    // console.table(path);
 
     // path = AStar.search(puzz, goalState);
-    // console.log(path);
+    // console.table(path);
 });
 
-!path && console.log('Please uncomment code in src/main.js to perform the searches :)');
+path.length === 0 && console.log('Please uncomment code in src/main.js to perform the searches :)');
