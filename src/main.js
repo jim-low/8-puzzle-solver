@@ -1,8 +1,6 @@
-import { movePuzzle, resetTiles, goalState } from './puzzle.js';
+import { goalState } from './puzzle.js';
 import BreadthFirst from './algorithms/breadth-first.js';
-import IterativeDeepening from './algorithms/iterative-deepening.js';
 import AStar from './algorithms/aStarSearch/a-star.js';
-import PuzzleAnimator from './animation.js';
 
 const puzzleStates = [
     [4, 8, 0, 7, 3, 2, 6, 5, 1],
@@ -16,45 +14,6 @@ const puzzleStates = [
     [4, 6, 1, 8, 3, 2, 5, 7, 0],
     [8, 7, 0, 5, 1, 6, 2, 3, 4],
 ]
-let currentStateIdx = 0;
-
-// maybe might not need this
-document.addEventListener('keydown', (e) => {
-    if (!e.key.includes('Arrow')) {
-        return;
-    }
-
-    movePuzzle(e.key.split('Arrow')[1].toLowerCase());
-});
-
-document.querySelectorAll('.animation-control').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const instruction = btn.classList[1];
-        //animator[instruction]();
-    });
-});
-
-document.querySelectorAll('.state-control').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const stateRequest = btn.classList[1]
-
-        if (stateRequest === 'reset') {
-            animator.resetPuzzle();
-            return;
-        }
-
-        if (stateRequest === 'prev' && currentStateIdx > 0) {
-            --currentStateIdx;
-        }
-
-        if (stateRequest === 'next' && currentStateIdx < puzzleStates.length) {
-            ++currentStateIdx;
-        }
-
-        const newState = new BreadthFirst().time(puzzleStates[currentStateIdx]);
-        animator.newPuzzle(newState);
-    });
-});
 
 let path = [];
 puzzleStates.forEach(puzz => {
