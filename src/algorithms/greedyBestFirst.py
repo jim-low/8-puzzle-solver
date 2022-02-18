@@ -300,7 +300,7 @@ class Game:
         return mainLst
 
     def get_random_puzzle(self):
-        lst = [4, 8, 0, 7, 3, 2, 6, 5, 1]
+        lst = [8, 7, 0, 5, 1, 6, 2, 3, 4]
         #random.shuffle(lst)
         lst.insert(0, ' ')
         return lst
