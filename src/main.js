@@ -6,7 +6,9 @@ let path = [];
 let memory = 0;
 puzzleStates.forEach(puzz => {
     path = new BreadthFirst().time(puzz);
-    console.table(path);
+    console.log(`Memory Used: ${window.performance.memory.usedJSHeapSize} byte`);
+    memory += window.performance.memory.usedJSHeapSize
+    console.log(path);
 
 
     path = AStar.search(puzz, goalState);
