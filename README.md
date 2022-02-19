@@ -4,6 +4,6 @@ College Assignment on Artificial Intelligence Project to solve given puzzle usin
 - Toy Problem: 8 Puzzle
 - Chosen Algorithms:
     - Breadth First Search
-    - Depth First Search
+    - Greedy Best First Search
     - A* Search
 - Programming Language: Javascript
