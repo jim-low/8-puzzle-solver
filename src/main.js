@@ -8,7 +8,7 @@ puzzleStates.forEach(puzz => {
     console.time('Breadth First Search');
     path = new BreadthFirst().time(puzz);
     console.timeEnd('Breadth First Search');
-    console.log(`Memory Used: ${window.performance.memory.usedJSHeapSize} byte`);
+    console.log(`BFS Memory Used: ${window.performance.memory.usedJSHeapSize} byte`);
     memory += window.performance.memory.usedJSHeapSize
     console.log(path);
 
@@ -16,7 +16,7 @@ puzzleStates.forEach(puzz => {
     console.time('A* Search');
     path = AStar.search(puzz, goalState);
     console.timeEnd('A* Search');
-    console.log(`Memory Used: ${window.performance.memory.usedJSHeapSize} byte`);
+    console.log(`A* Search Memory Used: ${window.performance.memory.usedJSHeapSize} byte`);
     memory += window.performance.memory.usedJSHeapSize
     console.log(path);
 });
